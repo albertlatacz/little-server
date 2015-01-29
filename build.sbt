@@ -17,7 +17,8 @@ val jettyVersion = "8.1.7.v20120910"
 
 libraryDependencies ++= Seq(
   "org.eclipse.jetty" % "jetty-webapp" % jettyVersion,
-  "org.eclipse.jetty" % "jetty-server" % jettyVersion
+  "org.eclipse.jetty" % "jetty-server" % jettyVersion,
+  "javax.servlet" % "javax.servlet-api" % "3.1.0"
 )
 
 sonatypeSettings
