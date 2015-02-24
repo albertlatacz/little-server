@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.nio.SelectChannelConnector
 import org.eclipse.jetty.webapp.WebAppContext
 
-class LittleServer(serverPort: Int) {
+class LittleServer(serverPort: Int, autoStart: Boolean = true, webAppPath: String = "src/main/webapp") {
   private val server = createServer(serverPort)
   private val context = createContext
   server.setHandler(context)
@@ -19,7 +19,7 @@ class LittleServer(serverPort: Int) {
     server
   }
 
-  private def startServer() = try {
+  def start() = try {
     server.start()
   } catch {
     case e: Throwable => e.printStackTrace(); throw e
@@ -35,9 +35,9 @@ class LittleServer(serverPort: Int) {
     val context = new WebAppContext()
     context.setServer(server)
     context.setContextPath("/")
-    context.setWar(discover("src/main/webapp", "webapp", context))
+    context.setWar(discover(webAppPath, "webapp", context))
     context
   }
 
-  startServer()
+  if (autoStart) start()
 }
