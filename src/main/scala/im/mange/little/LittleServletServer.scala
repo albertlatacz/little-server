@@ -37,17 +37,22 @@ class LittleServletServer(port: Int, autoStart: Boolean = true) {
   }
 
   private def buildServer = {
+//    val server = new Server
+//
+//    val httpConfiguration = new HttpConfiguration()
+//    httpConfiguration.setOutputBufferSize(1000000)
+//
+//    val httpConnector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration))
+//    httpConnector.setPort(port)
+//    httpConnector.setAcceptQueueSize(Runtime.getRuntime.availableProcessors() * 2)
+//    server.setConnectors(Array(httpConnector))
+//
+//    server.setStopAtShutdown(true)
+//    server
     val server = new Server
-
-    val httpConfiguration = new HttpConfiguration()
-    httpConfiguration.setOutputBufferSize(1000000)
-
-    val httpConnector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration))
+    val httpConnector = new ServerConnector(server)
     httpConnector.setPort(port)
-    httpConnector.setAcceptQueueSize(Runtime.getRuntime.availableProcessors() * 2)
     server.setConnectors(Array(httpConnector))
-
-    server.setStopAtShutdown(true)
     server
   }
 
