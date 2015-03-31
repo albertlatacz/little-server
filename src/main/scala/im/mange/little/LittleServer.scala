@@ -26,15 +26,16 @@ class LittleServer(serverPort: Int, autoStart: Boolean = true, webAppPath: Strin
   }
 
   private def createContext = {
-    def packagedPath(loader: ClassLoader, root: String) = loader.getResource(root).toExternalForm
+    val classLoader = getClass.getClassLoader
+    def packagedPath(root: String) = classLoader.getResource(root).toExternalForm
 
     def discover(path: String, packaged: String, context: WebAppContext) =
-      if (new File(path).exists()) path
-      else packagedPath(context.getClass.getClassLoader, "webapp")
+      if (new File(path).exists()) path else packagedPath("webapp")
 
     val context = new WebAppContext()
     context.setServer(server)
     context.setContextPath("/")
+    context.setClassLoader(classLoader)
     context.setWar(discover(webAppPath, "webapp", context))
     context
   }
