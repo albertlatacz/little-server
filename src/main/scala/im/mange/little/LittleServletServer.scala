@@ -2,8 +2,7 @@ package im.mange.little
 
 import javax.servlet.http.HttpServlet
 
-import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.nio.SelectChannelConnector
+import org.eclipse.jetty.server._
 import org.eclipse.jetty.servlet.{ServletContextHandler, ServletHolder}
 
 //TODO: merge wiht LittleServer
@@ -39,11 +38,15 @@ class LittleServletServer(port: Int, autoStart: Boolean = true) {
 
   private def buildServer = {
     val server = new Server
-    val scc = new SelectChannelConnector
-    scc.setPort(port)
-    scc.setAcceptors(Runtime.getRuntime.availableProcessors() * 2)
-    scc.setResponseBufferSize(1000000)
-    server.setConnectors(Array(scc))
+
+    val httpConfiguration = new HttpConfiguration()
+    httpConfiguration.setOutputBufferSize(1000000)
+
+    val httpConnector = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration))
+    httpConnector.setPort(port)
+    httpConnector.setAcceptQueueSize(Runtime.getRuntime.availableProcessors() * 2)
+    server.setConnectors(Array(httpConnector))
+
     server.setStopAtShutdown(true)
     server
   }

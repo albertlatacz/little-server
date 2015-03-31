@@ -13,7 +13,7 @@ resolvers ++= Seq(
   "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
 )
 
-val jettyVersion = "8.1.12.v20130726"
+val jettyVersion = "9.2.10.v20150310"
 
 libraryDependencies ++= Seq(
   "org.eclipse.jetty" % "jetty-webapp" % jettyVersion,

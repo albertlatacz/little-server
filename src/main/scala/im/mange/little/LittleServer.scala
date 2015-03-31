@@ -2,8 +2,7 @@ package im.mange.little
 
 import java.io.File
 
-import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.nio.SelectChannelConnector
+import org.eclipse.jetty.server.{Server, ServerConnector}
 import org.eclipse.jetty.webapp.WebAppContext
 
 class LittleServer(serverPort: Int, autoStart: Boolean = true, webAppPath: String = "src/main/webapp") {
@@ -13,9 +12,9 @@ class LittleServer(serverPort: Int, autoStart: Boolean = true, webAppPath: Strin
 
   private def createServer(port: Int) = {
     val server = new Server
-    val selectChannelConnector = new SelectChannelConnector
-    selectChannelConnector.setPort(port)
-    server.setConnectors(Array(selectChannelConnector))
+    val httpConnector = new ServerConnector(server)
+    httpConnector.setPort(port)
+    server.setConnectors(Array(httpConnector))
     server
   }
 
